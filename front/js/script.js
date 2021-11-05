@@ -11,7 +11,7 @@ fetch("http://localhost:3000/api/products")
 
             //Ajout des éléments dans le DOM
              document.getElementById("items")
-            items.innerHTML += ` <a href="${data._id}">
+            items.innerHTML += ` <a href="./product.html?id=${data._id}">
             <article>
               <img src="${data.imageUrl}" alt="${data.altTxt}">
               <h3 class="productName">${data.name}</h3>
