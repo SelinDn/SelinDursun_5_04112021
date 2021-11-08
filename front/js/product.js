@@ -13,7 +13,26 @@ console.log(recoveryId);
 //Requête de l'API via les id des éléments
 fetch(`http://localhost:3000/api/products/${recoveryId}`)
     .then(res => res.json())
-    .then(data => console.log(data))  
+    //Ajout des détails du produit dans le DOM 
+    .then(data => {
+        document.querySelector(".item__img") 
+        .innerHTML +=
+            `<img src="${data.imageUrl}" alt="${data.altTxt}">`
+        document.querySelector("#title")
+        .innerHTML +=
+            `<h1 id="title">${data.name}</h1>`
+        document.querySelector("#price")
+        .innerHTML += 
+            `<span id="price">${data.price}</span>`
+        document.querySelector("#description")
+        .innerHTML += 
+            `<p id="description">${data.description}</p>`
+        document.querySelector("#colors")
+        .innerHTML += 
+            `<option value="">${data.colors}</option>`
+    })
+    .catch(error => console.log(error));
+    
      
 
             
