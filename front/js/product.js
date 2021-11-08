@@ -27,12 +27,16 @@ fetch(`http://localhost:3000/api/products/${recoveryId}`)
         document.querySelector("#description")
         .innerHTML += 
             `<p id="description">${data.description}</p>`
-        document.querySelector("#colors")
-        .innerHTML += 
-            `<option value="">${data.colors}</option>`
+        //Boucle pour implémenter les différentes couleurs du produit
+        for (i= 0; i < data.colors.length; i++){
+            document.createElement("option")
+            document.querySelector("#colors")
+            .innerHTML += 
+                `<option value="">${data.colors[i]}</option>`
+            }
     })
     .catch(error => console.log(error));
-    
+      
      
 
             
