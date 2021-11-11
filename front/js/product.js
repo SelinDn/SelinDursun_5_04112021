@@ -32,13 +32,30 @@ fetch(`http://localhost:3000/api/products/${recoveryId}`)
             document.createElement("option")
             document.querySelector("#colors")
             .innerHTML += 
-                `<option value="">${data.colors[i]}</option>`
-            }
-    })
-    .catch(error => console.log(error));
-      
-     
+                `<option value="${data.colors[i]}">${data.colors[i]}</option>`
+        }
+        //Cibler le bouton "Ajouter au panier" afin de pouvoir créer un événement
+        const btnPanier = document.getElementById("addToCart");
+            btnPanier.addEventListener("click", (e)=>{
+                //Pour annuler le comportement par défaut du bouton 
+                e.preventDefault();
+                //Création d'une constante avec comme objet les valeurs des produits
+                const productValue = {
+                    name: data.name,
+                    id: recoveryId,
+                    price: data.price,
+                    description: data.description,
+                    alt: data.altTxt,
+                    color: document.getElementById("colors").value,
+                    quantity: document.getElementById("quantity").value,
+                    image: data.imageUrl,
+                }
+                productValue;
+                console.log(productValue);
+            })
+        })
+.catch(error => console.log(error));
 
-            
+ 
 
     
