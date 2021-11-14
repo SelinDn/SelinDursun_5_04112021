@@ -56,7 +56,6 @@ fetch(`http://localhost:3000/api/products/${recoveryId}`)
             /*Vérification pour savoir si le localStorage comporte une clé
             JSON.parse permet de transformer un fichier JSON en objet JS */
             let addProductToLocalStorage = JSON.parse(localStorage.getItem("Kanap"));
-            console.log(addProductToLocalStorage);
             /*Dans le cas de produits avec même id et couleur présents dans le panier 
             JSON.stringify permet de transformer un objet JS en fichier JSON
             La méthode find permet de trouver le premier élément en respectant la condition donnée,
