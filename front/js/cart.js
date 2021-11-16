@@ -38,3 +38,26 @@ else{
         </article>`
     }
 };
+
+//Création d'un array pour stocker les prix à l'intérieur avec l'aide d'une boucle for 
+const totalPriceArray = [];
+for (let j=0; j < addProductToLocalStorage.length; j++){
+    const totalPriceProducts = addProductToLocalStorage[j].price;
+    totalPriceArray.push(totalPriceProducts);
+    console.log(totalPriceArray)
+}
+
+//Méthode de calcul avec reduce pour accumuler les prix ensemble et retourner un total 
+const reducer = (accumulator, currentValue) => accumulator + currentValue;
+const totalPrice = totalPriceArray.reduce(reducer, 0);
+console.log(totalPrice)
+
+//Affichage du prix et de la quantité d'articles 
+document.getElementById("totalPrice").innerHTML = `${totalPrice}`;
+
+document.getElementById("totalQuantity").innerHTML = `${addProductToLocalStorage.length}`;
+
+
+
+   
+
