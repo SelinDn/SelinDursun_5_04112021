@@ -42,7 +42,7 @@ else{
 //Création d'un array pour stocker les prix à l'intérieur avec l'aide d'une boucle for 
 const totalPriceArray = [];
 for (let j=0; j < addProductToLocalStorage.length; j++){
-    const totalPriceProducts = addProductToLocalStorage[j].price;
+    const totalPriceProducts = (addProductToLocalStorage[j].price * addProductToLocalStorage[j].quantity);
     totalPriceArray.push(totalPriceProducts);
     console.log(totalPriceArray)
 }
@@ -52,12 +52,17 @@ const reducer = (accumulator, currentValue) => accumulator + currentValue;
 const totalPrice = totalPriceArray.reduce(reducer, 0);
 console.log(totalPrice)
 
-//Affichage du prix et de la quantité d'articles 
+//Affichage du prix  
 document.getElementById("totalPrice").innerHTML = `${totalPrice}`;
 
-document.getElementById("totalQuantity").innerHTML = `${addProductToLocalStorage.length}`;
+//Selection de l'input pour saisir la quantité d'articles 
+ const quantity = document.querySelectorAll(".itemQuantity");
+ let quantityArticle = 0;
+ /*Ajout d'une boucle afin de récupérer la quantité d'articles et de l'incrémenter 
+ dans une variable avec la quantité saisie */
+    for(let k=0; k < quantity.length; k++){
+       quantityArticle += parseInt(quantity[k].value);
+    }
 
-
-
-   
-
+//Affichage du nombre d'articles 
+document.getElementById("totalQuantity").innerHTML = quantityArticle;
