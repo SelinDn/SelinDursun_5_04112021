@@ -55,25 +55,28 @@ console.log(totalPrice)
 //Affichage du prix  
 document.getElementById("totalPrice").innerHTML = `${totalPrice}`;
 
-//Selection de l'input pour saisir la quantité d'articles 
-const quantity = document.querySelectorAll(".itemQuantity");
-let quantityArticle = 0;
-/*Ajout d'une boucle afin de récupérer la quantité d'articles et de l'incrémenter 
-dans une variable avec la quantité saisie */
-for(k=0; k < quantity.length; k++){
-    quantityArticle += parseInt(quantity[k].value)
-    quantity[k].addEventListener("change", (e) => {
-        let product = e.target.closest("article");
-        let productId = product.dataset.id;
-        let productQuantity = e.target.value;
-        let productColor = product.dataset.color;
-        
-        console.log(productId, productColor, productQuantity);
-    });
+function changeQuantity (){ 
+    //Selection de l'input pour saisir la quantité d'articles 
+    const quantity = document.querySelectorAll(".itemQuantity");
+    let quantityArticle = 0;
+    /*Ajout d'une boucle afin de récupérer la quantité d'articles et de l'incrémenter 
+    dans une variable avec la quantité saisie */
+    for(k=0; k < quantity.length; k++){
+        quantityArticle += parseInt(quantity[k].value)
+        quantity[k].addEventListener("change", (e) => {
+            const refreshAddProductToLocalStorage = {
+                productId : e.target.closest("article").dataset.id,
+                productQuantity : e.target.value,
+                productColor : e.target.closest("article").dataset.color,
+            }
+            console.log(refreshAddProductToLocalStorage);
+            addProductToLocalStorage[k] = refreshAddProductToLocalStorage;
+            localStorage.setItem("Kanap", JSON.stringify(addProductToLocalStorage));
+        });
+    }
+    //Affichage du nombre d'articles 
+    document.getElementById("totalQuantity").innerHTML = quantityArticle; 
 }
-
- 
-//Affichage du nombre d'articles 
-document.getElementById("totalQuantity").innerHTML = quantityArticle; 
+changeQuantity();
 
 
