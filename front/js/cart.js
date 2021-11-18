@@ -97,3 +97,32 @@ function changeQuantity (){
     }
 }
 changeQuantity();
+
+//Création d'une fonction pour prendre en charge la suppression des articles 
+function deleteArticle (){
+    const deleteChoice = document.querySelectorAll(".deleteItem");
+
+    //Boucle pour itérer sur chaque article et afin de les écouter 
+    for(let i=0; i < deleteChoice.length; i++){
+        deleteChoice[i].addEventListener("click", (e) => {
+            e.preventDefault();
+
+            //Ciblage de l'article correspondant avec element.closest()
+            let deleteProductId = e.target.closest("article").dataset.id;
+            let deleteProductColor = addProductToLocalStorage[i].color;
+            console.log(deleteProductId, deleteProductColor);
+
+            /*Méthode filter pour créer un nouveau array en supprimant l'article choisi
+            par rapport à son id et à sa couleur */
+            const productDelete = addProductToLocalStorage.filter(
+                (element) => element.id !== deleteProductId || element.color !== deleteProductColor
+            )
+            addProductToLocalStorage = productDelete;
+            localStorage.setItem("Kanap", JSON.stringify(addProductToLocalStorage));
+            //Permet de rafraîchir la page 
+            location.reload();
+            alert("Êtes-vous sûr de vouloir vider votre panier ?");
+        })
+    }
+}
+deleteArticle();
