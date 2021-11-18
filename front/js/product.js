@@ -52,7 +52,7 @@ fetch(`http://localhost:3000/api/products/${recoveryId}`)
             }
             productValue;
             console.log(productValue);
-
+            
             /*Vérification pour savoir si le localStorage comporte une clé
             JSON.parse permet de transformer un fichier JSON en objet JS */
             let addProductToLocalStorage = JSON.parse(localStorage.getItem("Kanap"));
@@ -85,7 +85,7 @@ fetch(`http://localhost:3000/api/products/${recoveryId}`)
             }       
         })
     })
-    .catch(error => console.log(error));
+.catch(error => console.log(error));
 
  
 

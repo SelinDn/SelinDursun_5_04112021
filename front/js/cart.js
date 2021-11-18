@@ -55,28 +55,42 @@ console.log(totalPrice)
 //Affichage du prix  
 document.getElementById("totalPrice").innerHTML = `${totalPrice}`;
 
-function changeQuantity (){ 
-    //Selection de l'input pour saisir la quantité d'articles 
+//Selection de l'input pour saisir la quantité d'articles 
     const quantity = document.querySelectorAll(".itemQuantity");
     let quantityArticle = 0;
     /*Ajout d'une boucle afin de récupérer la quantité d'articles et de l'incrémenter 
     dans une variable avec la quantité saisie */
     for(k=0; k < quantity.length; k++){
-        quantityArticle += parseInt(quantity[k].value)
-        quantity[k].addEventListener("change", (e) => {
-            const refreshAddProductToLocalStorage = {
-                productId : e.target.closest("article").dataset.id,
-                productQuantity : e.target.value,
-                productColor : e.target.closest("article").dataset.color,
-            }
-            console.log(refreshAddProductToLocalStorage);
-            addProductToLocalStorage[k] = refreshAddProductToLocalStorage;
-            localStorage.setItem("Kanap", JSON.stringify(addProductToLocalStorage));
-        });
+        quantityArticle += parseInt(quantity[k].value) 
     }
     //Affichage du nombre d'articles 
     document.getElementById("totalQuantity").innerHTML = quantityArticle; 
+
+function changeQtty (){
+    const modifQtty = document.querySelectorAll(".itemQuantity");
+    for(let i=0; i < modifQtty.length; i++){
+        modifQtty[i].addEventListener("change", (e) => {
+            e.preventDefault();
+
+            let productId = e.target.closest("article").dataset.id;
+            let productColor = addProductToLocalStorage[i].color;
+            let actualQtty = addProductToLocalStorage[i].quantity;
+            let newQtty = e.target.value;
+            console.log(productId, productColor, newQtty);
+
+            const productSearch = addProductToLocalStorage.find(
+                (element) => element.newQtty !== actualQtty 
+            )
+            productSearch.quantity = newQtty;
+            actualQtty = productSearch.quantity;
+            localStorage.setItem("Kanap", JSON.stringify(addProductToLocalStorage));
+            location.reload();
+
+          
+        }) 
+    }
 }
-changeQuantity();
+changeQtty();
+
 
 
