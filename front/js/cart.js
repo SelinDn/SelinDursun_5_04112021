@@ -56,41 +56,44 @@ console.log(totalPrice)
 document.getElementById("totalPrice").innerHTML = `${totalPrice}`;
 
 //Selection de l'input pour saisir la quantité d'articles 
-    const quantity = document.querySelectorAll(".itemQuantity");
-    let quantityArticle = 0;
-    /*Ajout d'une boucle afin de récupérer la quantité d'articles et de l'incrémenter 
-    dans une variable avec la quantité saisie */
-    for(k=0; k < quantity.length; k++){
-        quantityArticle += parseInt(quantity[k].value) 
-    }
-    //Affichage du nombre d'articles 
-    document.getElementById("totalQuantity").innerHTML = quantityArticle; 
+const quantity = document.querySelectorAll(".itemQuantity");
+let quantityArticle = 0;
 
-function changeQtty (){
-    const modifQtty = document.querySelectorAll(".itemQuantity");
-    for(let i=0; i < modifQtty.length; i++){
-        modifQtty[i].addEventListener("change", (e) => {
+/*Ajout d'une boucle afin de récupérer la quantité d'articles et de l'incrémenter 
+dans une variable avec la quantité saisie */
+for(k=0; k < quantity.length; k++){
+    quantityArticle += parseInt(quantity[k].value) 
+}
+
+//Affichage du nombre d'articles 
+document.getElementById("totalQuantity").innerHTML = quantityArticle; 
+
+//Création d'une fonction pour prendre en charge la modification d'articles sur la page panier
+function changeQuantity (){
+    const modifyQuantity = document.querySelectorAll(".itemQuantity");
+
+    //Boucle pour itérer sur chaque articles et afin de les écouter 
+    for(let i=0; i < modifyQuantity.length; i++){
+        modifyQuantity[i].addEventListener("change", (e) => {
             e.preventDefault();
 
+            //Ciblage de l'article correspondant avec element.closest()
             let productId = e.target.closest("article").dataset.id;
             let productColor = addProductToLocalStorage[i].color;
-            let actualQtty = addProductToLocalStorage[i].quantity;
-            let newQtty = e.target.value;
-            console.log(productId, productColor, newQtty);
+            let actualQuantity = addProductToLocalStorage[i].quantity;
+            let newQuantity = e.target.value;
+            console.log(productId, productColor, newQuantity, actualQuantity);
 
+            //Méthode find pour rechercher les articles ayant le même id et la même couleur
             const productSearch = addProductToLocalStorage.find(
-                (element) => element.newQtty !== actualQtty 
+                (element) => element.id === productId && element.color === productColor 
             )
-            productSearch.quantity = newQtty;
-            actualQtty = productSearch.quantity;
+            productSearch.quantity = newQuantity;
+            actualQuantity = productSearch.quantity;
             localStorage.setItem("Kanap", JSON.stringify(addProductToLocalStorage));
+            //Permet de rafraîchir la page 
             location.reload();
-
-          
         }) 
     }
 }
-changeQtty();
-
-
-
+changeQuantity();
