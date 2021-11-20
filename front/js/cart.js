@@ -126,3 +126,45 @@ function deleteArticle (){
     }
 }
 deleteArticle();
+
+//Création d'une fonction pour contrôler les valeurs du formulaire et l'écouter 
+function formValidity (){
+    const form = document.querySelector(".cart__order__form");
+
+    //Ajout d'un addEventListener sur tout les inputs du formulaire
+    form.firstName.addEventListener("change" , function(){
+        firstNameValidity(this);
+    });
+
+    form.lastName.addEventListener("change" , function(){
+        lastNameValidity(this);
+    });
+
+    form.address.addEventListener("change" , function(){
+        addressValidity(this);
+    });
+
+    form.city.addEventListener("change" , function(){
+        cityValidity(this);
+    });
+
+    form.email.addEventListener("change" , function(){
+        emailValidity(this);
+    });
+
+    //Test de tout les inputs du formulaire en appelant les fonctions de chacuns
+    const firstNameValidity = function(inputOfFirstName){
+        //Création de la regEx pour le firstName 
+        let firstNameRegEx = new RegExp(
+            "^[^0-9 @][a-zA-ZÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ ,.'-\s]+$"
+        );
+
+        if (firstNameRegEx.test(inputOfFirstName.value)){
+            return true
+        }
+        else{
+            inputOfFirstName.nextElementSibling.innerHTML = "Prénom non valide" 
+        };
+    }
+}
+formValidity();
