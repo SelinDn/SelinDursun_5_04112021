@@ -153,18 +153,85 @@ function formValidity (){
     });
 
     //Test de tout les inputs du formulaire en appelant les fonctions de chacuns
+
+    //Test pour le firstName
     const firstNameValidity = function(inputOfFirstName){
         //Création de la regEx pour le firstName 
         let firstNameRegEx = new RegExp(
-            "^[^0-9 @][a-zA-ZÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ ,.'-\s]+$"
+            "^[^0-9 #<>:!? @][a-zA-ZÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ ,.'-\s]+$"
         );
 
         if (firstNameRegEx.test(inputOfFirstName.value)){
-            return true
+            return true,
+            inputOfFirstName.nextElementSibling.innerHTML = ""
         }
         else{
             inputOfFirstName.nextElementSibling.innerHTML = "Prénom non valide" 
         };
-    }
+    };
+
+    //Test pour le lastName
+    const lastNameValidity = function(inputOfLastName){
+        //Création de la regEx pour le lastName 
+        let lastNameRegEx = new RegExp(
+            "^[^0-9 #<>:!?@][a-zA-ZÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ ,.'-\s]+$"
+        );
+
+        if (lastNameRegEx.test(inputOfLastName.value)){
+            return true,
+            inputOfLastName.nextElementSibling.innerHTML = "" 
+        }
+        else{
+            inputOfLastName.nextElementSibling.innerHTML = "Nom non valide" 
+        };
+    };
+
+    //Test pour l'adresse
+    const addressValidity = function(inputOfAddress){
+        //Création de la regEx pour l'adresse
+        let addressRegEx = new RegExp(
+            "^[^ #<>:!?@][a-zA-Z0-9ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ ,.'-\s]{8,40}$"
+        );
+
+        if (addressRegEx.test(inputOfAddress.value)){
+            return true,
+            inputOfAddress.nextElementSibling.innerHTML = "" 
+        }
+        else{
+            inputOfAddress.nextElementSibling.innerHTML = "Adresse non valide" 
+        };
+    };
+
+    //Test pour la ville
+    const cityValidity = function(inputOfCity){
+        //Création de la regEx pour la ville
+        let cityRegEx = new RegExp(
+            "^[^ 0-9#<>:!?@][a-zA-ZÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ ,.'-\s]{2,40}$"
+        );
+
+        if (cityRegEx.test(inputOfCity.value)){
+            return true,
+            inputOfCity.nextElementSibling.innerHTML = "" 
+        }
+        else{
+            inputOfCity.nextElementSibling.innerHTML = "Nom de ville invalide" 
+        };
+    };
+
+    //Test pour l'email
+    const emailValidity = function(inputOfEmail){
+        //Création de la regEx pour l'email
+        let emailRegEx = new RegExp(
+            "^[^ <>?][a-zA-Z0-9ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ ,.'-_]+[@]{1}[^ <>?][a-zA-Z0-9ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ ,.'-_]+[.]{1}[a-z]{2,20}$"
+        );
+
+        if (emailRegEx.test(inputOfEmail.value)){
+            return true,
+            inputOfEmail.nextElementSibling.innerHTML = "" 
+        }
+        else{
+            inputOfEmail.nextElementSibling.innerHTML = "Adresse mail invalide" 
+        };
+    };
 }
 formValidity();
