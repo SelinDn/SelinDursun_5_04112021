@@ -233,5 +233,106 @@ function formValidity (){
             inputOfEmail.nextElementSibling.innerHTML = "Adresse mail invalide" 
         };
     };
+
+    //Ciblage du bouton "Commander" pour soumettre le formulaire
+    const postForm = document.getElementById("order");
+    postForm.addEventListener("click", (e) =>{
+        e.preventDefault();
+
+        //Création d'un array regroupant les id des produits présents dans le localStorage
+        let products = [];
+        for (let i=0; i<addProductToLocalStorage.length; i++){
+            products.push(addProductToLocalStorage[i].id)
+        }
+        console.log(products)
+
+        //Création de l'objet regroupant les saisies de l'internaute et l'array précedemment créé
+        const order = {
+            contact:{
+                firstName: document.getElementById("firstName").value,
+                lastName: document.getElementById("lastName").value,
+                address: document.getElementById("address").value,
+                city: document.getElementById("city").value,
+                email: document.getElementById("email").value,
+            },
+            products: products
+        }
+        console.log(order)
+
+        //Condition "Si" les attentes du formulaire sont respectées 
+        if(firstNameValidity() && lastNameValidity() && addressValidity() && cityValidity() && emailValidity()){
+
+            //On demande l'orderId à l'API via un fetch POST
+            fetch("http://localhost:3000/api/products/order", {
+                method:"POST",
+
+                body: JSON.stringify(order),
+
+                headers:{
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                document.location.href = `confirmation.html?orderId=${data.orderId}`
+            })
+            .catch(error => console.log(error))
+        }
+    })
 }
 formValidity();
+
+
+
+
+
+//Création d'une fonction pour envoyer le formulaire au serveur
+/*function formSave(){
+    const btnForm = document.querySelector("#order");
+
+    btnForm.addEventListener("submit" , (e) => {
+        e.preventDefault();
+       
+        /*Création du tableau de produits demandé et d'une boucle 
+        pour y ajouter tout les produits contenus dans le localStorage*/
+       /* let arrayOfProductId = [];
+        for(let i=0; i < addProductToLocalStorage.length; i++){
+            arrayOfProductId.push(addProductToLocalStorage[i].id);
+        }
+
+        //Création de l'objet demandé contenant aussi le tableau de produits
+        const order = {
+            contact : {
+                firstName: document.getElementById("firstName").value,
+                lastName: document.getElementById("lastName").value,
+                address: document.getElementById("address").value,
+                city: document.getElementById("city").value,
+                email: document.getElementById("email").value
+            },
+            products : arrayOfProductId
+        }
+
+        //Création de la condition "Si" afin de vérifier les valeurs du formulaire avant envoi
+        if(firstNameValidity() && lastNameValidity() && addressValidity() && cityValidity() && emailValidity()){
+            //Envoi de la demande avec fetch méthode POST
+            fetch("http://localhost:3000/api/products/order", {
+                method:"POST",
+
+                body: JSON.stringify(order),
+
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+            })
+            .then(response => response.json())
+            .then((data) => {
+                window.location.href = `confirmation.html?orderId=${data.orderId}`
+            })
+            .catch(error => console.log(error))
+        
+        };
+    });
+}
+formSave(); */
