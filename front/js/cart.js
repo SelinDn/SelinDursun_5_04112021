@@ -161,13 +161,18 @@ function formValidity (){
             "^[^0-9 #<>:!? @][a-zA-ZÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ ,.'-\s]+$"
         );
 
-        if (firstNameRegEx.test(inputOfFirstName.value)){
+        /*if(inputOfFirstName.value === "")
+            return false,
+            inputOfFirstName.nextElementSibling.innerHTML = "Veuillez renseigner votre prénom"*/
+        
+        if (firstNameRegEx.test(inputOfFirstName.value) && form.firstName.value != ""){
             return true,
             inputOfFirstName.nextElementSibling.innerHTML = ""
-        }
+            }
         else{
             inputOfFirstName.nextElementSibling.innerHTML = "Prénom non valide" 
         };
+        
     };
 
     //Test pour le lastName
@@ -177,7 +182,7 @@ function formValidity (){
             "^[^0-9 #<>:!?@][a-zA-ZÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ ,.'-\s]+$"
         );
 
-        if (lastNameRegEx.test(inputOfLastName.value)){
+        if (lastNameRegEx.test(inputOfLastName.value) && form.lastName.value != ""){
             return true,
             inputOfLastName.nextElementSibling.innerHTML = "" 
         }
@@ -193,7 +198,7 @@ function formValidity (){
             "^[^ #<>:!?@][a-zA-Z0-9ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ ,.'-\s]{8,40}$"
         );
 
-        if (addressRegEx.test(inputOfAddress.value)){
+        if (addressRegEx.test(inputOfAddress.value) && form.address.value != "" ){
             return true,
             inputOfAddress.nextElementSibling.innerHTML = "" 
         }
@@ -209,7 +214,7 @@ function formValidity (){
             "^[^ 0-9#<>:!?@][a-zA-ZÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ ,.'-\s]{2,40}$"
         );
 
-        if (cityRegEx.test(inputOfCity.value)){
+        if (cityRegEx.test(inputOfCity.value) && form.city.value !=""){
             return true,
             inputOfCity.nextElementSibling.innerHTML = "" 
         }
@@ -225,7 +230,7 @@ function formValidity (){
             "^[^ <>?][a-zA-Z0-9ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ ,.'-_]+[@]{1}[^ <>?][a-zA-Z0-9ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ ,.'-_]+[.]{1}[a-z]{2,20}$"
         );
 
-        if (emailRegEx.test(inputOfEmail.value)){
+        if (emailRegEx.test(inputOfEmail.value) && form.email.value != ""){
             return true,
             inputOfEmail.nextElementSibling.innerHTML = "" 
         }
@@ -233,11 +238,11 @@ function formValidity (){
             inputOfEmail.nextElementSibling.innerHTML = "Adresse mail invalide" 
         };
     };
-
+    
     //Ciblage du bouton "Commander" pour soumettre le formulaire
     const postForm = document.getElementById("order");
     postForm.addEventListener("click", (e) =>{
-        e.preventDefault();
+        e.preventDefault(); 
 
         //Création d'un array regroupant les id des produits présents dans le localStorage
         let products = [];
@@ -245,6 +250,8 @@ function formValidity (){
             products.push(addProductToLocalStorage[i].id)
         }
         console.log(products)
+
+        if(form.firstName.value && form.lastName.value && form.address.value && form.city.value && form.email.value){
 
         //Création de l'objet regroupant les saisies de l'internaute et l'array précedemment créé
         const order = {
@@ -260,8 +267,8 @@ function formValidity (){
         console.log(order)
 
         //Condition "Si" les attentes du formulaire sont respectées 
-        if(firstNameValidity() && lastNameValidity() && addressValidity() && cityValidity() && emailValidity()){
-
+        //if(firstNameValidity.value && lastNameValidity.value && addressValidity.value && cityValidity.value && emailValidity.value){
+            
             //On demande l'orderId à l'API via un fetch POST
             fetch("http://localhost:3000/api/products/order", {
                 method:"POST",
@@ -279,6 +286,7 @@ function formValidity (){
             })
             .catch(error => console.log(error))
         }
+        console.log(form.lastName.value)
     })
 }
 formValidity();
