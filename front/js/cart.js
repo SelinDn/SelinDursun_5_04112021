@@ -259,7 +259,7 @@ btn_form.addEventListener("click", (e) => {
         //Récupération de la réponse que l'on transmet dans l'URL de la page confirmation.html
         .then((response) => response.json())
         .then((data) => {
-            document.location.href = `confirmation.html?orderId=${data.orderId}`
+            document.location.href = "./confirmation.html?id=" + data.orderId
         })
         .catch(error => console.log(error));
 
