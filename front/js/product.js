@@ -52,6 +52,7 @@ fetch(`http://localhost:3000/api/products/${recoveryId}`)
             }
             productValue;
             console.log(productValue);
+            document.location.href = "./cart.html";
             
             /*Vérification pour savoir si le localStorage comporte une clé
             JSON.parse permet de transformer un fichier JSON en objet JS */

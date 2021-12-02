@@ -13,3 +13,4 @@ console.log(recoveryOrderId);
 //Ciblage de l'élément orderId et ajout de l'orderId dans celui-ci
 const returnOrderId = document.querySelector("#orderId");
 returnOrderId.innerText = recoveryOrderId;
+localStorage.clear();
