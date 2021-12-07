@@ -52,7 +52,8 @@ fetch(`http://localhost:3000/api/products/${recoveryId}`)
             }
             productValue;
             console.log(productValue);
-            document.location.href = "./cart.html";
+            document.location.href="./cart.html"
+
             
             /*Vérification pour savoir si le localStorage comporte une clé
             JSON.parse permet de transformer un fichier JSON en objet JS */
@@ -73,8 +74,16 @@ fetch(`http://localhost:3000/api/products/${recoveryId}`)
                     /*Dans le cas où la condition find est false 
                     Pour pouvoir ajouter d'autres produits au localStorage */
                     else {
-                        addProductToLocalStorage.push(productValue);
-                        localStorage.setItem("Kanap", JSON.stringify(addProductToLocalStorage));
+                        if(productValue.color === ""){
+                            alert("Veuillez sélectionner une couleur");
+                        }
+                        else if(productValue.quantity <=0){
+                            alert("Veuillez sélectionner une quantité");
+                        }
+                        else{
+                           addProductToLocalStorage.push(productValue);
+                            localStorage.setItem("Kanap", JSON.stringify(addProductToLocalStorage));
+                        }
                     }
                 }
             //Dans le cas où le panier est vide, création d'un array qu'on transmet au localStorage
@@ -83,7 +92,9 @@ fetch(`http://localhost:3000/api/products/${recoveryId}`)
                 addProductToLocalStorage.push(productValue);
                 localStorage.setItem("Kanap", JSON.stringify(addProductToLocalStorage));
                 console.log(addProductToLocalStorage);
-            }       
+                
+            }    
+            
         })
     })
 .catch(error => console.log(error));
